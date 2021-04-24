@@ -1,0 +1,31 @@
+{
+    "build": {
+      "extra_flags": "-DHELLO_PLATFORMIO",
+      "f_cpu": "62500000L",
+      "mabi": "ilp32",
+      "march": "rv32im",
+      "mcmodel": "medlow",
+      "bonfire-sdk": {
+        "ldscript": "ram_default.ld"
+      }
+      
+    },
+    "frameworks": [
+        "bonfire-sdk",
+        "_bare"
+      ],
+    
+    "platforms": ["Bonfire"],
+    "name": "Bonfire Basic SOC, 256MB DRAM",
+    "upload": {
+        "maximum_ram_size": 268435456,
+        "maximum_size": 32768,
+        "protocol": "ftdi",
+        "protocols": [
+          "ftdi"
+        ]
+      },
+    
+    "url": "https://bonfirecpu.eu",
+    "vendor": "Bonfire Project"
+  }

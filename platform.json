@@ -11,14 +11,23 @@
     },
     "version": "0.0.1",
     "frameworks": {
-    
+        "bonfire-sdk": {
+            "package":"framework-bonfire-sdk",
+            "script": "builder/frameworks/bonfire-sdk.py",
+            "title" : "Bonfire SDK"
+        }    
+
     },
     "packages": {
         "toolchain-riscv": {
             "type": "toolchain",
             "owner": "platformio",
             "version": "~1.80300.0"
-          }     
+          },
+          "framework-bonfire-sdk": {
+            "optional": true,
+            "type": "framework"            
+          }
       }
 }
   

@@ -6,6 +6,7 @@
 from os.path import join
 from SCons.Script import AlwaysBuild, Builder, Default, DefaultEnvironment
 
+
 env = DefaultEnvironment()
 
 # A full list with the available variables
@@ -19,21 +20,28 @@ env.Replace(
     OBJCOPY="riscv64-unknown-elf-objcopy",
     RANLIB="riscv64-unknown-elf-gcc-ranlib",
     SIZETOOL="riscv64-unknown-elf-size",
-    OBJDUMP="riscv64-unknown-elf-objdump"
+    OBJDUMP="riscv64-unknown-elf-objdump",
+
+    SIZEPRINTCMD='$SIZETOOL -d $SOURCES',
+    SIZEPROGREGEXP=r"^(?:\.text|\.data|\.rodata|\.text.align)\s+(\d+).*",
+    SIZEDATAREGEXP=r"^(?:\.data|\.bss|\.noinit)\s+(\d+).*",
 
     #UPLOADER=join("$PIOPACKAGES_DIR", "tool-bar", "uploader"),
     #UPLOADCMD="$UPLOADER $SOURCES"
 )
 
+if env.get("PROGNAME", "program") == "program":
+    env.Replace(PROGNAME="firmware")
+
 env.Append(
     # ARFLAGS=["..."],
 
     # ASFLAGS=["flag1", "flag2", "flagN"],
-    CCFLAGS=["-march=rv32im", "-mabi=ilp32", "-mstrict-align"],
+    CCFLAGS=["-mstrict-align"],
     # CXXFLAGS=["flag1", "flag2", "flagN"],
-    LINKFLAGS=["-Wl,--gc-sections",  "-march=rv32im", "-mabi=ilp32", "-mstrict-align"],
+    LINKFLAGS=["-mstrict-align"],
 
-    # CPPDEFINES=["-DBONFIRE", "DEFINE=2", "DEFINE_N"],
+    CPPDEFINES=["-DBONFIRE"],
 
     # LIBS=["additional", "libs", "here"],
 
@@ -68,6 +76,7 @@ env.Append(
     )
 )
 
+
 # The source code of "platformio-build-tool" is here
 # https://github.com/platformio/platformio-core/blob/develop/platformio/builder/tools/platformio.py
 
@@ -79,13 +88,15 @@ target_elf = env.BuildProgram()
 #
 # Target: Build the .bin file
 #
-target_bin = env.ElfToBin(join("$BUILD_DIR", "firmware"), target_elf)
+_name = env.get("PROGNAME")
+
+target_bin = env.ElfToBin(join("$BUILD_DIR", _name), target_elf)
 # Target: Build the .hex file
 #
-target_hex = env.ElfToHex(join("$BUILD_DIR", "firmware"), target_elf)
+target_hex = env.ElfToHex(join("$BUILD_DIR", _name), target_elf)
 # Target: Build the .lst file
 #
-target_lst = env.ElfToLst(join("$BUILD_DIR", "firmware"), target_elf)
+target_lst = env.ElfToLst(join("$BUILD_DIR", _name), target_elf)
 
 #
 # Target: Upload firmware
@@ -94,6 +105,20 @@ upload = env.Alias(["upload"], target_bin, "$UPLOADCMD")
 AlwaysBuild(upload)
 
 #
+# Target: Print binary size
+#
+
+target_size = env.Alias(
+    "size", target_elf,
+    env.VerboseAction("$SIZEPRINTCMD", "Calculating size $SOURCE"))
+
+AlwaysBuild(target_size)
+AlwaysBuild(target_lst)
+AlwaysBuild(target_hex)
+AlwaysBuild(target_bin)
+
+
+#
 # Target: Define targets
 #
-Default(target_bin,target_hex,target_lst)
+Default([target_bin,target_hex,target_lst,target_size])
