@@ -1,0 +1,24 @@
+{
+    "name": "Bonfire",
+    "title": "Bonfire CPU",
+    "description": "Bonfire CPU Softcore",
+    "homepage": "https://bonfirecpu.eu",
+    "license": "BSD",
+    "keywords": ["RISC-V", "bonfire", "FPGA"],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/bonfire/bonfire-pio.git"
+    },
+    "version": "0.0.1",
+    "frameworks": {
+    
+    },
+    "packages": {
+        "toolchain-riscv": {
+            "type": "toolchain",
+            "owner": "platformio",
+            "version": "~1.80300.0"
+          }     
+      }
+}
+  
