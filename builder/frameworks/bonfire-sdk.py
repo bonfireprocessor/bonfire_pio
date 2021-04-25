@@ -39,10 +39,11 @@ env.Append(
     ],
 
     LINKFLAGS=[
-        "-Os",
+        "-Og",
         "-ffunction-sections",
         "-fdata-sections",
         #"-nostartfiles",
+        "-nodefaultlibs",
         "-march=%s" % board_config.get("build.march"),
         "-mabi=%s" % board_config.get("build.mabi"),
         "-mcmodel=%s" % board_config.get("build.mcmodel"),
@@ -52,18 +53,18 @@ env.Append(
     CPPDEFINES=["BONFIRE_SDK"],
     # INCDIR=[
     #     join(FRAMEWORK_DIR,"inc"),
-    #     join(FRAMEWORK_DIR,"inc","ULX3S")
+    #     join(FRAMEWORK_DIR,"boards", board_config.get("build.bonfire-sdk.platform"))
     # ],
     LIBPATH=[
         "$BUILD_DIR",
-        join(FRAMEWORK_DIR, "ld"),
-        join(FRAMEWORK_DIR,"inc"),
-        join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
+        join(FRAMEWORK_DIR, "ld")
+        #join(FRAMEWORK_DIR,"inc"),
+        #join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
     ],
     CPPPATH=[
         join(FRAMEWORK_DIR,"src"),
         join(FRAMEWORK_DIR,"inc"),
-        join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
+        join(FRAMEWORK_DIR,"boards", board_config.get("build.bonfire-sdk.platform"))
     ],
     
 
@@ -77,3 +78,16 @@ if not board_config.get("build.ldscript", ""):
 
 # copy CCFLAGS to ASFLAGS (-x assembler-with-cpp mode)
 env.Append(ASFLAGS=env.get("CCFLAGS", [])[:])
+
+#
+# Target: Build sdk 
+#
+
+libs = []
+
+libs.append(env.BuildLibrary(    
+    "$BUILD_DIR",
+    join(FRAMEWORK_DIR, "src")
+))
+
+env.Prepend(LIBS=libs)
