@@ -20,6 +20,7 @@ from SCons.Script import Import
 from os.path import isdir, isfile, join
 
 Import("env")
+print(env)
 
 board_config = env.BoardConfig()
 
@@ -48,12 +49,23 @@ env.Append(
         "--specs=nano.specs",
         "-Wl,--gc-sections"
     ],
-    CPPDEFINES=["-D_BARE"],
-
+    CPPDEFINES=["BONFIRE_SDK"],
+    # INCDIR=[
+    #     join(FRAMEWORK_DIR,"inc"),
+    #     join(FRAMEWORK_DIR,"inc","ULX3S")
+    # ],
     LIBPATH=[
         "$BUILD_DIR",
-        join(FRAMEWORK_DIR, "ld")
+        join(FRAMEWORK_DIR, "ld"),
+        join(FRAMEWORK_DIR,"inc"),
+        join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
     ],
+    CPPPATH=[
+        join(FRAMEWORK_DIR,"src"),
+        join(FRAMEWORK_DIR,"inc"),
+        join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
+    ],
+    
 
     LIBS=["c"],
 )

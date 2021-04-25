@@ -6,7 +6,8 @@
       "march": "rv32im",
       "mcmodel": "medlow",
       "bonfire-sdk": {
-        "ldscript": "ram_default.ld"
+        "ldscript": "ram_default.ld",
+        "platform": "ULX3S"
       }
       
     },

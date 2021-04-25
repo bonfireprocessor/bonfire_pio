@@ -84,6 +84,7 @@ env.Append(
 # Target: Build executable and linkable firmware
 #
 target_elf = env.BuildProgram()
+AlwaysBuild(target_elf)
 
 #
 # Target: Build the .bin file
@@ -91,6 +92,7 @@ target_elf = env.BuildProgram()
 _name = env.get("PROGNAME")
 
 target_bin = env.ElfToBin(join("$BUILD_DIR", _name), target_elf)
+
 # Target: Build the .hex file
 #
 target_hex = env.ElfToHex(join("$BUILD_DIR", _name), target_elf)
@@ -121,4 +123,4 @@ AlwaysBuild(target_bin)
 #
 # Target: Define targets
 #
-Default([target_bin,target_hex,target_lst,target_size])
+Default(target_bin,target_lst)
