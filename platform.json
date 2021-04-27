@@ -3,7 +3,7 @@
     "title": "Bonfire CPU",
     "description": "Bonfire CPU Softcore",
     "homepage": "https://bonfirecpu.eu",
-    "license": "BSD",
+    "license": "MIT",
     "keywords": ["RISC-V", "bonfire", "FPGA"],
     "repository": {
       "type": "git",
