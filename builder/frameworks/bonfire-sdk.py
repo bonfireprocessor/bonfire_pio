@@ -58,17 +58,18 @@ env.Append(
     LIBPATH=[
         "$BUILD_DIR",
         join(FRAMEWORK_DIR, "ld")
-        #join(FRAMEWORK_DIR,"inc"),
-        #join(FRAMEWORK_DIR,"inc", board_config.get("build.bonfire-sdk.platform"))
+       
     ],
     CPPPATH=[
         join(FRAMEWORK_DIR,"src"),
         join(FRAMEWORK_DIR,"inc"),
         join(FRAMEWORK_DIR,"boards", board_config.get("build.bonfire-sdk.platform"))
     ],
+    LIBSOURCE_DIRS=[
+        join(FRAMEWORK_DIR, "libraries")
+    ],
     
-
-    LIBS=["c"],
+    LIBS=["c","m"]
 )
 
 if not board_config.get("build.ldscript", ""):

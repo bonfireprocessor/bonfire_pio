@@ -6,7 +6,7 @@
       "march": "rv32im",
       "mcmodel": "medlow",
       "bonfire-sdk": {
-        "ldscript": "ram_default.ld",
+        "ldscript": "ram_ulx3s.ld",
         "platform": "ULX3S"
       }
       
@@ -17,14 +17,11 @@
       ],
     
     "platforms": ["Bonfire"],
-    "name": "Bonfire Basic SOC, 256MB DRAM",
+    "name": "Bonfire Basic SOC, 32MB DRAM",
     "upload": {
-        "maximum_ram_size": 268435456,
-        "maximum_size": 32768,
-        "protocol": "ftdi",
-        "protocols": [
-          "ftdi"
-        ]
+        "maximum_ram_size": 33554432,
+        "maximum_size": 32768
+        
       },
     
     "url": "https://bonfirecpu.eu",
