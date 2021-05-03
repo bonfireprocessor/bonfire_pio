@@ -26,7 +26,8 @@
           },
           "framework-bonfire-sdk": {
             "optional": true,
-            "type": "framework"            
+            "type": "framework",
+            "version": "~1.0"            
           }
       }
 }

@@ -31,6 +31,7 @@ assert FRAMEWORK_DIR and isdir(FRAMEWORK_DIR)
 env.Append(
     CCFLAGS=[
         "-Og",
+        "-g",
         "-Wall",  # show warnings
         "-march=%s" % board_config.get("build.march"),
         "-mabi=%s" % board_config.get("build.mabi"),
@@ -40,6 +41,7 @@ env.Append(
 
     LINKFLAGS=[
         "-Og",
+        "-g",
         "-ffunction-sections",
         "-fdata-sections",
         #"-nostartfiles",

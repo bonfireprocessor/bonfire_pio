@@ -58,6 +58,7 @@ env.Append(
         ElfToLst=Builder(
             action=" ".join([
                 "$OBJDUMP",
+                "-S",
                 "-d",               
                 "$SOURCES",
                 ">$TARGET"]),
