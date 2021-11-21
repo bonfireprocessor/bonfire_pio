@@ -1,0 +1,29 @@
+{
+    "build": {
+      "extra_flags": "-DHELLO_PLATFORMIO",
+      "f_cpu": "83333333L",
+      "mabi": "ilp32",
+      "march": "rv32im",
+      "mcmodel": "medlow",
+      "bonfire-sdk": {
+        "ldscript": "ram_arty_axi.ld",
+        "platform": "ARTY_AXI"
+      }
+      
+    },
+    "frameworks": [
+        "bonfire-sdk",
+        "_bare"
+      ],
+    
+    "platforms": ["Bonfire"],
+    "name": "Bonfire on Arty, 256MB DRAM",
+    "upload": {
+        "maximum_ram_size": 268435456,
+        "maximum_size": 32768
+        
+      },
+    
+    "url": "https://bonfirecpu.eu",
+    "vendor": "Bonfire Project"
+  }
